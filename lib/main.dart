@@ -1,3 +1,6 @@
+import 'package:api_learn/example_four.dart';
+import 'package:api_learn/example_three.dart';
+import 'package:api_learn/example_tow.dart';
 import 'package:api_learn/home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +20,6 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: HomeScreen(),
-    );
+      home: ExampleThree());
   }
 }

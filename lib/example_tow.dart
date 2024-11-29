@@ -24,6 +24,7 @@ class _ExampleTowState extends State<ExampleTow> {
       for (Map i in data) {
         Photos photos = Photos(title: i['title'], url: i['url'], id: i['id']);
         photosList.add(photos);
+        print('Lise ${photosList.length}');
       }
       return photosList;
     } else {
@@ -35,25 +36,37 @@ class _ExampleTowState extends State<ExampleTow> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Photos Api')),
-      body: Expanded(
-          child: FutureBuilder(
-        future: getPhotosApi(),
-        builder: (context, snapshot) {
-          return ListView.builder(
-            itemCount: photosList.length,
-            itemBuilder: (context, index) {
-           return   ListTile(
-             
+      body: Column(
+        children: [
+          Expanded(
+              child: FutureBuilder(
+            future: getPhotosApi(),
+            builder: (context, snapshot) {
+              if(snapshot.hasData) {
+                return ListView.builder(
 
-             leading: CircleAvatar(backgroundImage: NetworkImage(snapshot.data![index].url.toString()),),
-             title: Text('Noted id: '+ snapshot.data![index].id.toString()),
-                subtitle: Text(snapshot.data![index].title.toString()),
-             
-              );
+                  itemCount: photosList.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+
+
+                      leading: CircleAvatar(backgroundImage: NetworkImage(
+                          snapshot.data![index].url.toString()),),
+                      title: Text('Noted id: ' +
+                          snapshot.data![index].id.toString()),
+                      subtitle: Text(snapshot.data![index].title.toString()),
+
+                    );
+                  },
+                );
+              }
+              else{
+                return CircularProgressIndicator();
+              }
             },
-          );
-        },
-      )),
+          )),
+        ],
+      ),
     );
   }
 }
